@@ -1,0 +1,22 @@
+[build-system]
+requires      = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "budget_simulation_tool"
+version = "1.0.0"
+description = "simulate your household budget"
+readme = "README.md"
+authors = [{ name = "Robert Lee", email = "robert05101@gmail.com" }]
+license = { file = "LICENSE" }
+classifiers = [
+    "License :: OSI Approved :: GNU Affero General Public License v3",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+]
+keywords = ["budget", "simulation", "markov chain"]
+dependencies = [
+    "pandas",
+    "numpy",
+]
+requires-python = ">=3.8"
