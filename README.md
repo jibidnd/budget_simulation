@@ -230,6 +230,6 @@ cumulative_in_a_year.describe()
 
 
     
-![png](example_files/example_5_1.png)
+![png](readme_files/example_5_1.png)
     
 
