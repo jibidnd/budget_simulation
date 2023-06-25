@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 from budget_simulation_tool import ConstantItem, DiscreteItem, ContinuousItem, Budget
 ```
 
-# Create our items
+# A budget consists of "Items"
 
 Each item represents a cashflow, which can be an income or expense.
 
@@ -16,7 +16,7 @@ There are three types of cashflows:
 - `ConstantItem`: A constant cashflow:
     - This is a cashflow that is not expected to vary by time.
     - For example, perhaps your gym membership or your internet bill is a fixed amount per month and this is not expected to change.
-- `DiscreteItem`: A cash flow that can take a finte amount of scenarios:
+- `DiscreteItem`: A cash flow that can take a finte number of scenarios:
     - This is a cash flow that may vary from time to time, but can only take a finite number of possible values.
     - For example, income from employment may have 3 states: `current job, promotion, and unemployed`
 - `ContinuousItem`: A cash flow that can take any number of scenarios:
@@ -42,22 +42,28 @@ Enough said. Let's look at an example:
 ## Establishing the cash flow items
 
 
+
+### Constant Item
+For a constant item, simply provide the name and amount of the cashflow.
 ```python
-# Constant Item
 gym_membership = ConstantItem(
     'gym_membership',
     -5
 )
+```
 
-# Discrete Item, does not depend on prior
+### Discrete Item
+For a discrete item that does not depend on the prior state, provide the name, name and value of each state, and the probability distribution.
+```python
 car_maintenance = DiscreteItem(
     'car_maintenance',
     {'small_item': -5, 'big_item': -30, 'both': -35, 'no_maintenance': 0},
     [0.1, 0.05, 0.01, 0.84]
 )
-    
+```
 
-# Discrete Item, depends on prior
+Similarly, for an item that does depend on its prior state, pass a transition probability matrix instead of a vector. Provide the initial state of the item.
+```python
 employment_income = DiscreteItem(
     'employment_income',
     {'cushy_job': 100, 'startup': 80, 'IPO': 1000, 'jobless': 0},
@@ -69,14 +75,19 @@ employment_income = DiscreteItem(
         ],
     init = 'startup'
     )
+```
 
-# Continuous Item, does not depend on prior
+### Continuous Item
+For a continuous item that does not depend on its prior state, provide a callable that returns a value.
+```python
 groceries = ContinuousItem(
     'groceries',
     lambda: -np.random.exponential(20),
     )
+```
 
-# Continuous Item, depends on prior
+And for a continuous itme that does depend on its prior state, provide a callable that takes `prior` as an argument and returns a value. Provide the initial state of the item.
+```python
 utilities = ContinuousItem(
     'utilities',
     lambda prior: min(-np.random.normal(abs(prior)), 0),
