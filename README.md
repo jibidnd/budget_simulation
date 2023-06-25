@@ -137,6 +137,7 @@ cumulative_in_a_year.describe()
         text-align: right;
     }
 </style>
+
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
